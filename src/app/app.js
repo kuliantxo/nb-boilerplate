@@ -2,7 +2,9 @@ angular.module( 'ngBoilerplate', [
   'templates-app',
   'templates-common',
   'ngBoilerplate.home',
-  'ngBoilerplate.about',
+  'ngBoilerplate.stations',
+  'ngBoilerplate.genres',
+  'ngBoilerplate.played',
   'ui.router'
 ])
 
