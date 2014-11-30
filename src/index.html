@@ -46,28 +46,7 @@
                     <div id="wiki-content" style="display: none"></div>
                 </div>
             </div>
-
-
-
-
-            <div id="tabs">
-                <ul id="navigation" ng-controller="NavCtrl">
-                    <li ng-class="navClass('stations')"><a href="/stations">Stations</a></li>
-                    <li ng-class="navClass('genres')"><a href="/genres">Genres</a></li>
-                    <li ng-class="navClass('played')"><a href="/played">Played</a></li>
-                    <li class="clear">
-                        <form ng-submit="search(query)" id="search">
-                            <input type="text" placeholder="Find music you love..." ng-model="query">
-                        </form>
-                    </li>
-                </ul>
-
-                <div ng:view></div>
-            </div>
         </section>
-
-
-
 
         <div class="container">
             <div class="navbar navbar-default">
