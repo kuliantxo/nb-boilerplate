@@ -23,8 +23,8 @@ angular.module( 'ngBoilerplate', [
     });
 })
 
-.controller( 'PlayerCtrl', function PlayerCtrl ( $scope, $location ) {
-    var station = 'wava2',
+.controller( 'PlayerCtrl', function PlayerCtrl ( $scope, $location, playerFctr ) {
+    var station = {"STREAM_ID":"113719","STATION_ID":"124080","STATION_ADDR":{},"STATION_ADDRESS":"http:\/\/www.live365.com\/play\/wava2","STATION_BROADCASTER":"wava2","STATION_BROADCASTER_URL":"http:\/\/www.HotHitsAtlanta.net","STATION_TITLE":"Hot Hits Atlanta - WAVA","STATION_DESCRIPTION":"Picking You Up!  Making You Feel Good!  We Play Today's Hottest Top 40 Hits 24\/7! Welcome Home!!      \u00a0  \u00a0  \u00a0  \u00a0  \u00a0  \u00a0  \u00a0  \u00a0  \u00a0  \u00a0  \u00a0  \u00a0  \u00a0  \u00a0 E-Mail me Anytime! amos@hothitsatlanta.net","STATION_KEYWORDS":"Top 40 Pop Chris Brown Justin Rihanna Fergie Gwen Stefani Pink  3OH3! Timbaland T-Pain wava Hit Music","STATION_GENRE":"pop, hip-hop\/rap, top 40","STATION_CONNECTION":"128","STATION_CODEC":"mp3","STATION_QUALITY_LEVEL":"265","STATION_SOURCE":"live365","STATION_RATING":"9.00","STATION_LISTENERS_ACTIVE_REG":"501","STATION_LISTENERS_ACTIVE_PM":"23","STATION_LISTENERS_ACTIVE":"524","STATION_LISTENERS_MAX":"1800","STATION_TLH_30_DAYS":"418330","LIVE365_ATTRIBUTES":{"STATION_ATTR":"[Professional]"},"LIVE365_ATTRIBUTES_CODES":"PRXA","LISTENER_ACCESS":"PUBLIC","STATION_STATUS":"OK","STATION_SERVER_MODE":"OR","STATION_SEARCH_SCORE":"1.0","STATION_LOCATION":"Atlanta, GA"},
         defaultVolume = 0.8,
         timer = 0,
         simplePlayer = document.getElementById('audio');
@@ -35,7 +35,6 @@ angular.module( 'ngBoilerplate', [
 
     $scope.clickPlay = function() {
         if (simplePlayer.paused) {
-//          simplePlayer.load();
             simplePlayer.src = 'http://www.live365.com/play/'+nowPlayingFactory.getStationBroadcaster();
             simplePlayer.play();
         } else {
@@ -120,6 +119,40 @@ angular.module( 'ngBoilerplate', [
     });
 })
 
+.factory('PlayerFctr', function($rootScope) {
+    var station = {"STREAM_ID":"113719","STATION_ID":"124080","STATION_ADDR":{},"STATION_ADDRESS":"http:\/\/www.live365.com\/play\/wava2","STATION_BROADCASTER":"wava2","STATION_BROADCASTER_URL":"http:\/\/www.HotHitsAtlanta.net","STATION_TITLE":"Hot Hits Atlanta - WAVA","STATION_DESCRIPTION":"Picking You Up!  Making You Feel Good!  We Play Today's Hottest Top 40 Hits 24\/7! Welcome Home!!      \u00a0  \u00a0  \u00a0  \u00a0  \u00a0  \u00a0  \u00a0  \u00a0  \u00a0  \u00a0  \u00a0  \u00a0  \u00a0  \u00a0 E-Mail me Anytime! amos@hothitsatlanta.net","STATION_KEYWORDS":"Top 40 Pop Chris Brown Justin Rihanna Fergie Gwen Stefani Pink  3OH3! Timbaland T-Pain wava Hit Music","STATION_GENRE":"pop, hip-hop\/rap, top 40","STATION_CONNECTION":"128","STATION_CODEC":"mp3","STATION_QUALITY_LEVEL":"265","STATION_SOURCE":"live365","STATION_RATING":"9.00","STATION_LISTENERS_ACTIVE_REG":"501","STATION_LISTENERS_ACTIVE_PM":"23","STATION_LISTENERS_ACTIVE":"524","STATION_LISTENERS_MAX":"1800","STATION_TLH_30_DAYS":"418330","LIVE365_ATTRIBUTES":{"STATION_ATTR":"[Professional]"},"LIVE365_ATTRIBUTES_CODES":"PRXA","LISTENER_ACCESS":"PUBLIC","STATION_STATUS":"OK","STATION_SERVER_MODE":"OR","STATION_SEARCH_SCORE":"1.0","STATION_LOCATION":"Atlanta, GA"};
+
+    return {
+/*
+        prepForBroadcast: function(stn, play) {
+            if ((station.STATION_BROADCASTER == stn.STATION_BROADCASTER) && (play === true)) {
+                broadcastPlay();
+            } else {
+                station = stn;
+                station.status = 'paused';
+                broadcastItem();
+                if (play === true) {
+                    broadcastPlay();
+                }
+            }
+        },
+*/
+        setStatusAndBroadcast: function(status) {
+            station.status = status;
+//            broadcastStatus();
+        },
+        getStationBroadcaster: function () {
+            return station.STATION_BROADCASTER;
+        },
+        getStationStatus: function () {
+            return station.status;
+        },
+        getStationTitle: function () {
+            return station.STATION_TITLE;
+        }
+    };
+})
+
 .controller( 'PlayingCtrl', function PlayingCtrl ( $scope, $location, playingFctr ) {
     var pGress,
         pTosh,
@@ -133,12 +166,12 @@ angular.module( 'ngBoilerplate', [
         time: 321,
         progress: 0,
         album: 'Album',
-        image: '/images/missing.png'
+        image: 'assets/missing.png'
     };
 
-    $http.get('/proxy.php?url='+encodeURIComponent(url)).success(function(data) {
-        nowPlayingFactory.prepForBroadcast(data.contents.LIVE365_STATION);
-    });
+//    $http.get('/proxy.php?url='+encodeURIComponent(url)).success(function(data) {
+//        nowPlayingFactory.prepForBroadcast(data.contents.LIVE365_STATION);
+//    });
 
     $scope.formatTrackTime = function (seconds) {
 /*
@@ -153,7 +186,7 @@ angular.module( 'ngBoilerplate', [
         return s;
 */
     };
-
+/*
     function handlePLSData(station, title) {
         if (pTosh) {
             clearTimeout(pTosh);
@@ -223,6 +256,7 @@ angular.module( 'ngBoilerplate', [
     $scope.$on('handleBroadcast', function() {
         handlePLSData(nowPlayingFactory.getStationBroadcaster(), nowPlayingFactory.getStationTitle());
     });
+*/
 })
 
 .factory('playingFctr', function ($http) {

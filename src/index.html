@@ -18,37 +18,39 @@
         <script type="text/javascript" src="<%= file %>"></script><% }); %>
     </head>
     <body>
-        <section id="main">
-            <div id="player" ng-controller="PlayerCtrl">
-                <audio id="audio" preload="auto">
-                    Your browser does not support the <code>audio</code> element.
-                </audio>
-
-                <button type="button" class="btn btn-primary" id="control" ng-click="clickPlay()"><i class="fa fa-play"></i></button>
-            </div>
-
-            <div id="now-playing" class="now-playing" ng-controller="PlayingCtrl">
-                <div class="metadata">
-                    <h3 id="station">{{nowPlaying.stationName}}</h3>
-                    <div id="artist"><strong>{{nowPlaying.artist}}</strong></div>
-                    <div id="title">{{nowPlaying.title}} <span id="time">{{formatTrackTime(nowPlaying.time)}}</span></div>
-                    <div id="album"><em>{{nowPlaying.album}}</em></div>
-                    <div><a href onclick="hideShow('wiki-content', this, {hide: 'Less Info <', show: 'More Info >'})">More Info ></a></div>
-                    <enlarge></enlarge>
-                </div>
-
-                <div id="cover-progress">
-                    <img id="cover" ng-src="{{nowPlaying.image}}" width="320" height="320" onerror="this.src = '/images/missing.png'">
-                    <div id="progress-bar"><div id="progress" style="width: {{nowPlaying.progress}}%"></div></div>
-                </div>
-
-                <div id="wiki">
-                    <div id="wiki-content" style="display: none"></div>
-                </div>
-            </div>
-        </section>
-
         <div class="container">
+            <div class="page-header">
+                <h1>Musik365 <small>Listen to Internet Radio</small></h1>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-8">
+                    <div id="cover">
+                        <img id="cover" ng-src="{{nowPlaying.image}}" width="320" height="320" onerror="this.src = 'assets/missing.png'">
+                        <div id="progress-bar"><div id="progress" style="width: {{nowPlaying.progress}}%"></div></div>
+                    </div>
+                </div>
+
+                <div class="col-xs-4">
+                    <div id="player" ng-controller="PlayerCtrl">
+                        <audio id="audio" preload="auto">
+                            Your browser does not support the <code>audio</code> element.
+                        </audio>
+
+                        <button type="button" class="btn btn-primary" id="control" ng-click="clickPlay()"><i class="fa fa-play"></i></button>
+                    </div>
+
+                    <div id="playing" ng-controller="PlayingCtrl">
+                        <div class="metadata">
+                            <h3 id="station">{{nowPlaying.stationName}}</h3>
+                            <div id="artist"><strong>{{nowPlaying.artist}}</strong></div>
+                            <div id="title">{{nowPlaying.title}} <span id="time">{{formatTrackTime(nowPlaying.time)}}</span></div>
+                            <div id="album"><em>{{nowPlaying.album}}</em></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="navbar navbar-default">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" ng-init="menuCollapsed = true"
@@ -79,35 +81,35 @@
                     </form>                    
                 </div>
             </div>
-        </div>
 
-        <div class="container" ui-view="main"></div>
+            <div ui-view="main"></div>
 
-        <footer class="footer">
-            <div class="container">
-                <div class="footer-inner">
-                    <ul class="social">
-                        <li><a target="_blank" href="http://gplus.to/joshdmiller"><i class="fa fa-google-plus-sign"></i></a></li>
-                        <li><a target="_blank" href="http://twitter.com/joshdmiller"><i class="fa fa-twitter-sign"></i></a></li>
-                        <li><a target="_blank" href="http://linkedin.com/in/joshdmiller"><i class="fa fa-linkedin-sign"></i></a></li>
-                        <li><a target="_blank" href="http://github.com/ngbp/ngbp"><i class="fa fa-github-sign"></i></a></li>
-                    </ul>
-                    
+            <footer class="footer">
+                <div class="container">
+                    <div class="footer-inner">
+                        <ul class="social">
+                            <li><a target="_blank" href="http://gplus.to/joshdmiller"><i class="fa fa-google-plus-sign"></i></a></li>
+                            <li><a target="_blank" href="http://twitter.com/joshdmiller"><i class="fa fa-twitter-sign"></i></a></li>
+                            <li><a target="_blank" href="http://linkedin.com/in/joshdmiller"><i class="fa fa-linkedin-sign"></i></a></li>
+                            <li><a target="_blank" href="http://github.com/ngbp/ngbp"><i class="fa fa-github-sign"></i></a></li>
+                        </ul>
+                        
 
-                    <p>
-                        (c) 2013 <a href="http://www.joshdavidmiller.com">Josh David Miller</a>. 
-                        <a href="http://github.com/ngbp/ngbp/fork_select">Fork this</a>
-                        to kickstart your next project.
-                        <br />
-                        ngbp is based on
-                        <a href="http://www.angularjs.org">AngularJS</a>,
-                        <a href="http://getbootstrap.com">Bootstrap</a>, 
-                        <a href="http://angular-ui.github.com/bootstrap">UI Bootstrap</a>,
-                        and 
-                        <a href="http://fortawesome.github.com/Font-Awesome">Font Awesome</a>.                
-                    </p>
+                        <p>
+                            (c) 2013 <a href="http://www.joshdavidmiller.com">Josh David Miller</a>. 
+                            <a href="http://github.com/ngbp/ngbp/fork_select">Fork this</a>
+                            to kickstart your next project.
+                            <br />
+                            ngbp is based on
+                            <a href="http://www.angularjs.org">AngularJS</a>,
+                            <a href="http://getbootstrap.com">Bootstrap</a>, 
+                            <a href="http://angular-ui.github.com/bootstrap">UI Bootstrap</a>,
+                            and 
+                            <a href="http://fortawesome.github.com/Font-Awesome">Font Awesome</a>.                
+                        </p>
+                    </div>
                 </div>
-            </div>
-        </footer>
+            </footer>
+        </div>
     </body>
 </html>
