@@ -11,7 +11,9 @@
             <i class="fa fa-play"></i>
         </a>
         <div class="media-body">
-            <h3 class="media-heading"><a href ui-sref="genres/{ genre.int }">{{ genre.ext }}</a></h3>
+            <h3 class="media-heading"><a href ui-sref="genres.stations({genre: genre.int })">{{ genre.ext }}</a></h3>
         </div>
     </li>
 </ul>
+
+<div ui-view="pepe"></div>

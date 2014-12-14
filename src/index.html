@@ -19,15 +19,13 @@
     </head>
     <body>
         <div class="container">
-            <div class="page-header">
+            <header class="page-header">
                 <h1>Musik365 <small>Listen to Internet Radio</small></h1>
-            </div>
+            </header>
 
             <div class="row">
                 <div class="col-xs-8">
                     <div id="cover">
-                        <img id="cover" ng-src="{{nowPlaying.image}}" width="320" height="320" onerror="this.src = 'assets/missing.png'">
-                        <div id="progress-bar"><div id="progress" style="width: {{nowPlaying.progress}}%"></div></div>
                     </div>
                 </div>
 
@@ -40,12 +38,15 @@
                         <button type="button" class="btn btn-primary" id="control" ng-click="clickPlay()"><i class="fa fa-play"></i></button>
                     </div>
 
-                    <div id="playing" ng-controller="PlayingCtrl">
+                    <div id="playing" ng-controller="NowPlayingCtrl">
+<pre>{{ nowPlaying.progress }}</pre>
                         <div class="metadata">
                             <h3 id="station">{{nowPlaying.stationName}}</h3>
                             <div id="artist"><strong>{{nowPlaying.artist}}</strong></div>
                             <div id="title">{{nowPlaying.title}} <span id="time">{{formatTrackTime(nowPlaying.time)}}</span></div>
                             <div id="album"><em>{{nowPlaying.album}}</em></div>
+                            <progressbar value="nowPlaying.progress"></progressbar>
+                            <img ng-src="{{nowPlaying.image}}" width="320" height="320" onerror="this.src = 'assets/missing.png'">
                         </div>
                     </div>
                 </div>
@@ -84,31 +85,8 @@
 
             <div ui-view="main"></div>
 
-            <footer class="footer">
-                <div class="container">
-                    <div class="footer-inner">
-                        <ul class="social">
-                            <li><a target="_blank" href="http://gplus.to/joshdmiller"><i class="fa fa-google-plus-sign"></i></a></li>
-                            <li><a target="_blank" href="http://twitter.com/joshdmiller"><i class="fa fa-twitter-sign"></i></a></li>
-                            <li><a target="_blank" href="http://linkedin.com/in/joshdmiller"><i class="fa fa-linkedin-sign"></i></a></li>
-                            <li><a target="_blank" href="http://github.com/ngbp/ngbp"><i class="fa fa-github-sign"></i></a></li>
-                        </ul>
-                        
-
-                        <p>
-                            (c) 2013 <a href="http://www.joshdavidmiller.com">Josh David Miller</a>. 
-                            <a href="http://github.com/ngbp/ngbp/fork_select">Fork this</a>
-                            to kickstart your next project.
-                            <br />
-                            ngbp is based on
-                            <a href="http://www.angularjs.org">AngularJS</a>,
-                            <a href="http://getbootstrap.com">Bootstrap</a>, 
-                            <a href="http://angular-ui.github.com/bootstrap">UI Bootstrap</a>,
-                            and 
-                            <a href="http://fortawesome.github.com/Font-Awesome">Font Awesome</a>.                
-                        </p>
-                    </div>
-                </div>
+            <footer class="page-footer">
+                <div>&copy; 2015 Musik365</div>
             </footer>
         </div>
     </body>

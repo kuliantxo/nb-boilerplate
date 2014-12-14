@@ -16,12 +16,12 @@ angular.module( 'ngBoilerplate.genres', [
             },
             data:{ pageTitle: 'Genres' }
         })
-        .state( 'genres.stn', {
-            url: '/genres/:stn',
+        .state( 'genres.stations', {
+            url: '/:genre',
             views: {
-                "main": {
-                    controller: 'GenresStnCtrl',
-                    templateUrl: 'genres/genres.stn.tpl.html'
+                "pepe": {
+                    controller: 'StationsCtrl',
+                    templateUrl: 'stations/stations.tpl.html'
                 }
             },
             data:{ pageTitle: 'Genres Stn' }
