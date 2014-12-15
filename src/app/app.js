@@ -153,7 +153,7 @@ angular.module( 'ngBoilerplate', [
     };
 })
 
-.controller( 'NowPlayingCtrl', function PlayingCtrl ( $scope, $location, nowPlayingFctr ) {
+.controller( 'NowPlayingCtrl', function PlayingCtrl ( $scope, $location, $timeout, $interval, nowPlayingFctr ) {
     var pGress,
         pTosh,
         previous;
@@ -169,15 +169,14 @@ angular.module( 'ngBoilerplate', [
     };
 
     var loadNowPlaying = function (station, title) {
-        if (pTosh) {
-            clearTimeout(pTosh);
-        }
+        $timeout.cancel(pTosh);
+        $interval.cancel(pGress);
 
         nowPlayingFctr.getNowPlaying(station, function(data) {
             if ((data.contents.PlaylistEntry.Artist != previous) || (data.contents.PlaylistEntry.Artist === '')) {
-                if($scope.nowPlaying.artist != 'Artist') {
-                    playedService.addPlayed($scope.nowPlaying);
-                }
+//                if($scope.nowPlaying.artist != 'Artist') {
+//                    playedService.addPlayed($scope.nowPlaying);
+//                }
                 previous = data.contents.PlaylistEntry.Artist;
 
                 var image = 'assets/missing.png';
@@ -208,26 +207,21 @@ angular.module( 'ngBoilerplate', [
                     image: image
                 };
 
-                // problems updating the image from the model
-                document.getElementById('cover').src = image;
-
-                if (pGress) {
-                    clearInterval(pGress);
-                }
                 var playedSoFar = Math.max(data.contents.PlaylistEntry.Seconds - data.contents.Refresh, 0);
-                pGress = setInterval(function() {
+                pGress = $interval(function() {
                     var pVal = Math.round((playedSoFar++ * 100) / data.contents.PlaylistEntry.Seconds);
                     if (pVal > 100) {
-                        clearInterval(pGress);
+                        $interval.cancel(pGress);
                     } else {
-                        $scope.nowPlaying.progress = pVal+'%';
+                        $scope.nowPlaying.progress = pVal;
+console.log(pVal);
                     }
                 },1000);
             } else {
                 refresh = 5;
             }
 
-            pTosh = setTimeout(function() {
+            pTosh = $timeout(function() {
                 loadNowPlaying(station, title);
             }, (data.contents.Refresh*1000));
         });
@@ -243,90 +237,6 @@ angular.module( 'ngBoilerplate', [
             $http.get('/proxy.php?url='+encodeURIComponent(url)).success(callback);
         }
     };
-})
-
-.factory( 'playingFctr2', function PlayingCtrl ( $scope, $location, playerFctr ) {
-    var pGress,
-        pTosh,
-        previous,
-        url = 'http://www.live365.com/cgi-bin/directory.cgi?site=xml&access=PUBLIC&rows=1&only=P';
-
-    return {};
-
-//    $http.get('/proxy.php?url='+encodeURIComponent(url)).success(function(data) {
-//        playerFctr.prepForBroadcast(data.contents.LIVE365_STATION);
-//    });
-
-/*
-    function handlePLSData(station, title) {
-        if (pTosh) {
-            clearTimeout(pTosh);
-        }
-        var url = 'http://www.live365.com/pls/front?handler=playlist&cmd=view&viewType=xml&handle='+station+'&maxEntries=1&tm=1348157450841';
-        $http.get('/proxy.php?url='+encodeURIComponent(url)).success(function(data) {
-            if ((data.contents.PlaylistEntry.Artist != previous) || (data.contents.PlaylistEntry.Artist === '')) {
-                if($scope.nowPlaying.artist != 'Artist') {
-                    playedService.addPlayed($scope.nowPlaying);
-                }
-                previous = data.contents.PlaylistEntry.Artist;
-
-                var image = '/images/missing.png';
-
-                if(data.contents.PlaylistEntry.visualURL) {
-                    var visualURL = data.contents.PlaylistEntry.visualURL.split('|');
-                    var visualURLEle = [];
-                    var visualURLData = {};
-
-                    for(var i = 0; i < visualURL.length; i++) {
-                        visualURLEle = visualURL[i].split('=');
-                        visualURLData[visualURLEle[0]] = visualURLEle[1];
-                    }
-                    
-                    image = unescape(visualURLData.img);
-                    
-                    if (image && image !== 'undefined' && image.indexOf('noimage') == -1) {
-                        image = image.replace(/SL1[36]0/, 'SL320');
-                    }
-                }
-
-                $scope.nowPlaying = {
-                    stationName: title,
-                    artist: data.contents.PlaylistEntry.Artist,
-                    title: data.contents.PlaylistEntry.Title,
-                    time: data.contents.PlaylistEntry.Seconds,
-                    album: data.contents.PlaylistEntry.Album,
-                    image: image
-                };
-
-                // problems updating the image from the model
-                document.getElementById('cover').src = image;
-
-                if (pGress) {
-                    clearInterval(pGress);
-                }
-                var playedSoFar = Math.max(data.contents.PlaylistEntry.Seconds - data.contents.Refresh, 0);
-                pGress = setInterval(function() {
-                    var pVal = Math.round((playedSoFar++ * 100) / data.contents.PlaylistEntry.Seconds);
-                    if (pVal > 100) {
-                        clearInterval(pGress);
-                    } else {
-                        document.getElementById('progress').style.width = pVal+'%';
-                    }
-                },1000);
-            } else {
-                refresh = 5;
-            }
-
-            pTosh = setTimeout(function() {
-                handlePLSData(station, title);
-            }, (data.contents.Refresh*1000));
-        });
-    }
-
-    $scope.$on('handleBroadcast', function() {
-        handlePLSData(playerFctr.getStationBroadcaster(), playerFctr.getStationTitle());
-    });
-*/
 })
 
 ;

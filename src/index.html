@@ -41,9 +41,9 @@
                     <div id="playing" ng-controller="NowPlayingCtrl">
 <pre>{{ nowPlaying.progress }}</pre>
                         <div class="metadata">
-                            <h3 id="station">{{nowPlaying.stationName}}</h3>
-                            <div id="artist"><strong>{{nowPlaying.artist}}</strong></div>
-                            <div id="title">{{nowPlaying.title}} <span id="time">{{formatTrackTime(nowPlaying.time)}}</span></div>
+                            <h2 id="station">{{ nowPlaying.stationName }}</h2>
+                            <div id="artist"><strong>{{ nowPlaying.artist }}</strong></div>
+                            <div id="title">{{nowPlaying.title}} <span id="time">[{{ nowPlaying.time*1000 | date:'mm:ss' }}]</span></div>
                             <div id="album"><em>{{nowPlaying.album}}</em></div>
                             <progressbar value="nowPlaying.progress"></progressbar>
                             <img ng-src="{{nowPlaying.image}}" width="320" height="320" onerror="this.src = 'assets/missing.png'">

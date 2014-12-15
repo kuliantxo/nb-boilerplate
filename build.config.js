@@ -7,8 +7,9 @@ module.exports = {
    * development and the `compile_dir` folder is where our app resides once it's
    * completely built.
    */
+//  compile_dir: 'bin',
 //  build_dir: 'build',
-  compile_dir: 'bin',
+  compile_dir: '/Applications/MAMP/htdocs',
   build_dir: '/Applications/MAMP/htdocs',
 
   /**
