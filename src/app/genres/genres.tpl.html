@@ -1,5 +1,5 @@
 <div class="row">
-  <h1 class="page-header">
+  <h1>
     Genres Page
     <small>For the lazy and impatient.</small>
   </h1>
@@ -7,13 +7,10 @@
 
 <ul class="media-list">
     <li class="media" ng-repeat="genre in genres">
-        <a class="media-left" href ng-click="setStation(station, true)">
-            <i class="fa fa-play"></i>
-        </a>
         <div class="media-body">
             <h3 class="media-heading"><a href ui-sref="genres.stations({genre: genre.int })">{{ genre.ext }}</a></h3>
         </div>
     </li>
 </ul>
 
-<div ui-view="pepe"></div>
+<div ui-view="stations"></div>

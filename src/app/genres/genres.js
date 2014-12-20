@@ -19,7 +19,7 @@ angular.module( 'ngBoilerplate.genres', [
         .state( 'genres.stations', {
             url: '/:genre',
             views: {
-                "pepe": {
+                "stations": {
                     controller: 'StationsCtrl',
                     templateUrl: 'stations/stations.tpl.html'
                 }

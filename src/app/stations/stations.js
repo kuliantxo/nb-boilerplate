@@ -76,7 +76,7 @@ angular.module( 'ngBoilerplate.stations', [
         restrict: 'E',
         template: '\
             <ul class="media-list">\
-                <li ng-repeat="station in stations" logic-option>kjhkjh</li>\
+                <li ng-repeat="station in stations" logic-option></li>\
             </ul>\
         '
     };  
@@ -88,11 +88,11 @@ angular.module( 'ngBoilerplate.stations', [
         replace: false,
         template: '\
             <li class="media">\
-                <a class="media-left" href ng-click="setStation(station, true)">\
+                <a class="pull-left" href ng-click="setStation(station, true)">\
                     <i class="fa fa-play"></i>\
                 </a>\
                 <div class="media-body">\
-                    <a class="bc_url" href="{{ station.STATION_BROADCASTER_URL }}" title="{{ station.STATION_BROADCASTER_URL }}" target="_blank"><i class="fa fa-home"></i></a>\
+                    <a class="bc_url pull-right" href="{{ station.STATION_BROADCASTER_URL }}" title="{{ station.STATION_BROADCASTER_URL }}" target="_blank"><i class="fa fa-home"></i></a>\
                     <h3 class="media-heading"><a href ng-click="setStation(station, true)">{{ station.STATION_TITLE }}</a></h3>\
                     <div>{{ station.STATION_DESCRIPTION }}</div>\
                     <div class="station_loc"><em>{{ station.STATION_LOCATION }}</em></div>\
