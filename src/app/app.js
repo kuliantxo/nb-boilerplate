@@ -249,7 +249,7 @@ angular.module( 'ngBoilerplate', [
 .factory('nowPlayingFctr', function ($http) {
     return {
         getNowPlaying: function(station, callback) {
-            var url = 'http://www.live365.com/pls/front?handler=playlist&cmd=view&viewType=xml&handle='+station+'&maxEntries=1&tm=1348157450841';
+            var url = 'http://www.live365.com/pls/front?handler=playlist&cmd=view&viewType=xml&handle='+station+'&maxEntries=1';
             $http.get('/proxy.php?url='+encodeURIComponent(url)).success(callback);
         }
     };
