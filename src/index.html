@@ -23,9 +23,22 @@
                 <h1>Musik365 <small>Listen to Internet Radio</small></h1>
             </header>
 
-            <div class="row">
-                <div class="col-xs-8">
+            <div class="row" ng-controller="NowPlayingCtrl">
+                <div class="col-xs-4">
                     <div id="cover">
+                        <img ng-src="{{nowPlaying.image}}" width="320" height="320" onerror="this.src = 'assets/missing.png'">
+                        <progressbar value="nowPlaying.progress"></progressbar>
+                    </div>
+                </div>
+
+                <div class="col-xs-4">
+                    <div id="playing">
+                        <div class="metadata">
+                            <h2 id="station">{{ nowPlaying.stationName }}</h2>
+                            <div id="artist"><strong>{{ nowPlaying.artist }}</strong></div>
+                            <div id="title">{{nowPlaying.title}} <span id="time">[{{ nowPlaying.time*1000 | date:'mm:ss' }}]</span></div>
+                            <div id="album"><em>{{nowPlaying.album}}</em></div>
+                        </div>
                     </div>
                 </div>
 
@@ -35,19 +48,9 @@
                             Your browser does not support the <code>audio</code> element.
                         </audio>
 
-                        <button type="button" class="btn btn-primary" id="control" ng-click="clickPlay()"><i class="fa fa-play"></i></button>
-                    </div>
-
-                    <div id="playing" ng-controller="NowPlayingCtrl">
-<pre>{{ nowPlaying.progress }}</pre>
-                        <div class="metadata">
-                            <h2 id="station">{{ nowPlaying.stationName }}</h2>
-                            <div id="artist"><strong>{{ nowPlaying.artist }}</strong></div>
-                            <div id="title">{{nowPlaying.title}} <span id="time">[{{ nowPlaying.time*1000 | date:'mm:ss' }}]</span></div>
-                            <div id="album"><em>{{nowPlaying.album}}</em></div>
-                            <progressbar value="nowPlaying.progress"></progressbar>
-                            <img ng-src="{{nowPlaying.image}}" width="320" height="320" onerror="this.src = 'assets/missing.png'">
-                        </div>
+                        <button type="button" class="btn btn-primary" id="control" ng-click="clickPlay()">
+                            <i class="fa" ng-class="player.btn"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -74,16 +77,16 @@
                             <a href ui-sref="played">Played</a>
                         </li>
                     </ul>
-                    <form class="navbar-form navbar-left" role="search">
+                    <form class="navbar-form navbar-left" role="search" ng-submit="search(query)">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Find music you love...">
+                            <input type="text" class="form-control" ng-model="query" placeholder="Find music you love...">
                         </div>
                         <button type="submit" class="btn btn-default">Submit</button>
                     </form>                    
                 </div>
             </div>
 
-            <div ui-view="main"></div>
+            <div ui-view></div>
 
             <footer class="page-footer">
                 <div>&copy; 2015 Musik365</div>

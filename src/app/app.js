@@ -5,6 +5,7 @@ angular.module( 'ngBoilerplate', [
     'ngBoilerplate.stations',
     'ngBoilerplate.genres',
     'ngBoilerplate.played',
+    'ngBoilerplate.search',
     'ui.router'
 ])
 
@@ -12,10 +13,13 @@ angular.module( 'ngBoilerplate', [
     $urlRouterProvider.otherwise( '/home' );
 })
 
-.run( function run () {
-})
+.run( function run () {})
 
-.controller( 'AppCtrl', function AppCtrl ( $scope, $location ) {
+.controller( 'AppCtrl', function AppCtrl ( $scope, $location, $state ) {
+    $scope.search = function(query) {
+        $state.go('search', {'query': query});
+    };
+
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
         if ( angular.isDefined( toState.data.pageTitle ) ) {
             $scope.pageTitle = toState.data.pageTitle + ' | ngBoilerplate' ;
@@ -30,7 +34,8 @@ angular.module( 'ngBoilerplate', [
         simplePlayer = document.getElementById('audio');
 
     $scope.player = {
-        status: 'paused'        // paused, buffering, playing, error
+        status: 'paused',        // paused, buffering, playing, error
+        btn: 'fa-play'
     };
 
     $scope.clickPlay = function() {
@@ -59,7 +64,10 @@ angular.module( 'ngBoilerplate', [
         logPlayerEvents(e);
         logPlayerEvents(simplePlayer.error);
         $scope.$apply(function () {
-            $scope.player.status = 'error';
+            $scope.player = {
+                status: 'error',
+                btn: 'fa-times'
+            };
         });
         playerFctr.setStatusAndBroadcast('error');
 
@@ -76,7 +84,10 @@ angular.module( 'ngBoilerplate', [
     bindEvent(simplePlayer, 'pause', function(e) {
         logPlayerEvents(e);
         $scope.$apply(function () {
-            $scope.player.status = 'paused';
+            $scope.player = {
+                status: 'paused',
+                btn: 'fa-play'
+            };
         });
         playerFctr.setStatusAndBroadcast('paused');
     });
@@ -84,7 +95,10 @@ angular.module( 'ngBoilerplate', [
     bindEvent(simplePlayer, 'play', function(e) {
         logPlayerEvents(e);
         $scope.$apply(function () {
-            $scope.player.status = 'buffering';
+            $scope.player = {
+                status: 'buffering',
+                btn: 'fa-refresh'
+            };
         });
         playerFctr.setStatusAndBroadcast('buffering');
     });
@@ -92,7 +106,10 @@ angular.module( 'ngBoilerplate', [
     bindEvent(simplePlayer, 'playing', function(e) {
         logPlayerEvents(e);
         $scope.$apply(function () {
-            $scope.player.status = 'playing';
+            $scope.player = {
+                status: 'playing',
+                btn: 'fa-pause'
+            };
         });
         playerFctr.setStatusAndBroadcast('playing');
     });
@@ -214,7 +231,6 @@ angular.module( 'ngBoilerplate', [
                         $interval.cancel(pGress);
                     } else {
                         $scope.nowPlaying.progress = pVal;
-console.log(pVal);
                     }
                 },1000);
             } else {

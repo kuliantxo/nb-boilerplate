@@ -1,16 +1,12 @@
-<div class="row">
-  <h1>
+<h1>
     Genres Page
     <small>For the lazy and impatient.</small>
-  </h1>
-</div>
+</h1>
 
 <ul class="media-list">
-    <li class="media" ng-repeat="genre in genres">
+    <li class="media" ng-repeat="(key, value) in genres">
         <div class="media-body">
-            <h3 class="media-heading"><a href ui-sref="genres.stations({genre: genre.int })">{{ genre.ext }}</a></h3>
+            <h3 class="media-heading"><a href ui-sref="genres-stations({genre: key })">{{ value.name }}</a></h3>
         </div>
     </li>
 </ul>
-
-<div ui-view="stations"></div>
