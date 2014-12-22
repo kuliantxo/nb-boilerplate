@@ -26,7 +26,7 @@
             <div class="row" ng-controller="NowPlayingCtrl">
                 <div class="col-xs-4">
                     <div id="cover">
-                        <img ng-src="{{nowPlaying.image}}" width="320" height="320" onerror="this.src = 'assets/missing.png'">
+                        <img ng-src="{{ nowPlaying.image }}" width="320" height="320" onerror="this.src = 'assets/missing.png'">
                         <progressbar value="nowPlaying.progress"></progressbar>
                     </div>
                 </div>

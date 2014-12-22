@@ -18,8 +18,12 @@ angular.module( 'ngBoilerplate.stations', [
     });
 })
 
-.controller( 'StationsCtrl', function StationsCtrl($scope, getStations) {
+.controller( 'StationsCtrl', function StationsCtrl($scope, getStations, nowPlayingFctr) {
     $scope.stations = getStations.data.contents.LIVE365_STATION;
+
+    $scope.setStation = function(station, play) {
+        nowPlayingFctr.prepForBroadcast(station, play);
+    };
 })
 
 .factory('stationsFctr', function ($http) {
